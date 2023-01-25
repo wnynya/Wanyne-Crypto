@@ -24,14 +24,14 @@ class Crypto {
   }
 
   hash(algorithm = 'sha512') {
-    const source = crypto.createHmac(algorithm, this.s.toString());
+    const source = crypto.createHash(algorithm, this.s.toString());
     source.update(this.d.toString());
     const hash = source.digest('hex');
     return hash;
   }
 
   cipher(iv = Buffer.alloc(16, 0), algorithm = 'aes-256-cbc') {
-    this.k = new Crypto(this.k).hash().substr(0, 32);
+    this.k = new Crypto(this.k).hash().substring(0, 32);
     const source = crypto.createCipheriv(algorithm, this.k, iv);
     let result = source.update(this.d.toString(), 'utf8', 'hex');
     result += source.final('hex');
