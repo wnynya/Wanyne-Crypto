@@ -1,4 +1,6 @@
-import crypto from 'crypto';
+'use strict';
+
+import crypto from 'node:crypto';
 import Date from 'datwo';
 
 class Crypto {
@@ -70,10 +72,9 @@ class Crypto {
   }
 
   static uid(time = new Date().getTime()) {
-    let dt = (new Date(time).format('CCCYYYYDDDDDCCC') * 1).toString(16);
-    while (dt.length < 13) {
-      dt = '0' + dt;
-    }
+    let dt = (new Date(time).format('CCCYYYYDDDDDCCC') * 1)
+      .toString(16)
+      .padStart(13, '0');
     let b = '';
     b += this.randomString(2, 'hex');
     b += dt[0] + this.randomString(1, 'hex');
@@ -98,15 +99,4 @@ class Crypto {
   }
 }
 
-function hash(d, s) {
-  return new Crypto(d).salt(s).hash();
-}
-
-function uid() {
-  return Crypto.uid();
-}
-
 export default Crypto;
-
-export { Crypto };
-export { hash, uid };

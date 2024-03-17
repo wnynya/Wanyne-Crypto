@@ -1,4 +1,4 @@
-import Crypto from '../crypto.mjs';
+import { Crypto, hash, uid } from '../src/index.mjs';
 
 console.log('hash: ' + new Crypto('hello').hash());
 console.log('hash: ' + new Crypto('hello').salt('salt').hash());
