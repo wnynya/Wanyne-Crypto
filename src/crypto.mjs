@@ -1,7 +1,6 @@
 'use strict';
 
 import crypto from 'node:crypto';
-import Date from 'datwo';
 
 class Crypto {
   constructor(d = crypto.randomBytes(256).toString('hex')) {
@@ -25,14 +24,14 @@ class Crypto {
     return this;
   }
 
-  hash(algorithm = 'sha512') {
+  hash(algorithm = 'SHA-512') {
     const source = crypto.createHash(algorithm, this.s.toString());
     source.update(this.d.toString());
     const hash = source.digest('hex');
     return hash;
   }
 
-  cipher(iv = Buffer.alloc(16, 0), algorithm = 'aes-256-cbc') {
+  cipher(iv = Buffer.alloc(16, 0), algorithm = 'AES-256-CBC') {
     this.k = new Crypto(this.k).hash().substring(0, 32);
     const source = crypto.createCipheriv(algorithm, this.k, iv);
     let result = source.update(this.d.toString(), 'utf8', 'hex');
@@ -40,8 +39,8 @@ class Crypto {
     return result;
   }
 
-  decipher(iv = Buffer.alloc(16, 0), algorithm = 'aes-256-cbc') {
-    this.k = new Crypto(this.k).hash().substr(0, 32);
+  decipher(iv = Buffer.alloc(16, 0), algorithm = 'AES-256-CBC') {
+    this.k = new Crypto(this.k).hash().substring(0, 32);
     const source = crypto.createDecipheriv(algorithm, this.k, iv);
     let result = source.update(this.d.toString(), 'hex', 'utf8');
     result += source.final('utf8');
@@ -71,31 +70,12 @@ class Crypto {
     return string;
   }
 
-  static uid(time = new Date().getTime()) {
-    let dt = (new Date(time).format('CCCYYYYDDDDDCCC') * 1)
-      .toString(16)
-      .padStart(13, '0');
-    let b = '';
-    b += this.randomString(2, 'hex');
-    b += dt[0] + this.randomString(1, 'hex');
-    b += dt[1] + this.randomString(1, 'hex');
-    b += dt[2] + this.randomString(1, 'hex');
-    b += dt[3] + this.randomString(1, 'hex');
-    b += dt[4] + this.randomString(1, 'hex');
-    b += dt[5] + this.randomString(1, 'hex');
-    b += dt[6] + this.randomString(1, 'hex');
-    b += dt[7] + this.randomString(1, 'hex');
-    b += dt[8] + this.randomString(1, 'hex');
-    b += dt[9] + this.randomString(1, 'hex');
-    b += dt[10] + this.randomString(1, 'hex');
-    b += dt[11] + this.randomString(1, 'hex');
-    b += dt[12] + this.randomString(1, 'hex');
-    b += this.randomString(4, 'hex');
-    return b;
-  }
-
   static random(amp) {
     return this.randomNumber(amp);
+  }
+
+  static uuid() {
+    return crypto.randomUUID();
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@wanyne/crypto",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Wanyne Crypto",
   "author": "Wany <sung@wanyne.com> (https://wanyne.com)",
   "main": "./src/index.mjs",
@@ -12,8 +12,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wnynya/Wanyne-Crypto.git"
-  },
-  "dependencies": {
-    "datwo": "^0.7.2"
   }
 }

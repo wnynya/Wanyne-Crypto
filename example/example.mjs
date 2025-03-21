@@ -14,4 +14,4 @@ console.log('decipher: ' + d2);
 console.log('random number: ' + Crypto.randomNumber(100));
 
 console.log('random string: ' + Crypto.randomString(16));
-console.log('uid (not UUID): ' + Crypto.uid());
+console.log('uid (not UUID): ' + Crypto.uuid());
